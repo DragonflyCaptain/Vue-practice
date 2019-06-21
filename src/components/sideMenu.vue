@@ -1,8 +1,15 @@
 <template>
-  <div class="menu-box">
-    <ul>
-      <li v-for="(item, index) of menuList" :key="index" @click="handleClick(item, index)">{{item}}</li>
-    </ul>
+  <div class="menu-box" :style="{top}">
+    <div class="list-warp">
+      <div
+        class="item"
+        v-for="(item, index) of menuList"
+        :key="index"
+        @click="handleClick(item, index)"
+      >{{item}}</div>
+    </div>
+    <div class="connect-line" v-if="flag"></div>
+    <div class="back-top" v-if="flag" @click="backTop">Top</div>
   </div>
 </template>
 
@@ -14,45 +21,87 @@ export default {
     return {
       menuList: MenuList,
       clickRoute,
-      display: "",
-      screenWidth: document.documentElement.clientWidth
+      top: "",
+      flag: false
     };
   },
   mounted() {
-    const that = this;
-    window.onresize = function() {
-      // 定义窗口大小变更通知事件
-      that.screenWidth = document.documentElement.clientWidth; //窗口高度
-      //   console.log(that.screenHeight);
-    };
+    this.listenerScroll();
   },
   methods: {
-    handleClick() {}
+    handleClick() {},
+    backTop() {
+      window.scrollTo(0, 0);
+    },
+    listenerScroll() {
+      window.onscroll = () => {
+        const scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop; //兼容性写法，并且在滚动事件内可以实时获得滚动条距顶部的距离
+        if (scrollTop > 270) {
+          this.top = "0px";
+          this.flag = true;
+        } else {
+          this.top = "232px";
+          this.flag = false;
+        }
+      };
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
 .menu-box {
-  width: 48px;
-  border: 1px solid #e5e9ef;
-  font-size: 12px;
-  border-radius: 4px;
   position: fixed;
-  left: 300px;
+  z-index: 10;
+  left: 50%;
   top: 232px;
-  z-index: 99999;
-  text-align: center;
-  ul {
-    width: 100%;
-    cursor: pointer;
-    li {
+  margin-left: 590px;
+  transition: top 0.3s;
+  font-size: 12px;
+  .list-warp {
+    position: relative;
+    background-color: #f6f9fa;
+    border: 1px solid #e5e9ef;
+    overflow: hidden;
+    border-radius: 4px;
+    .item {
+      width: 48px;
       height: 28px;
-      line-height: 28px;
+      line-height: 30px;
+      text-align: center;
+      transition: background-color 0.3s, color 0.3s;
+      cursor: pointer;
+      -ms-user-select: none;
+      user-select: none;
     }
-    li:hover {
-      background: #1890ff;
+    .item:hover {
+      background: #00a1d6;
     }
+  }
+  .back-top {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    height: 48px;
+    border: 1px solid #e5e9ef;
+    overflow: hidden;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 48px;
+  }
+  .back-top:hover {
+    background-color: #00a1d6;
+    background-position: -714px -72px;
+    border-color: #00a1d6;
+  }
+  .connect-line {
+    position: relative;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    height: 9px;
+    width: 30px;
+    margin: 0 auto;
   }
 }
 </style>
