@@ -16,6 +16,11 @@ const mutations = {
         return (
             state.count -= n
         )
+    },
+    mutationsResetCount(state, n = 0) {
+        return (
+            state.count = n
+        )
     }
 }
 const actions = {
@@ -28,6 +33,9 @@ const actions = {
         // eslint-disable-next-line no-console
         console.log(context)
         return context.commit('mutationsReduceCount', n)
+    },
+    actionsResetCount(context, n = 0) {
+        return context.commit('mutationsResetCount', n)
     }
 }
 

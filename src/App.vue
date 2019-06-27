@@ -24,7 +24,6 @@ html body {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
 }
 ul {
@@ -42,5 +41,9 @@ p {
   margin-inline-end: 0px;
   -webkit-margin-before: 0em;
   -webkit-margin-after: 0em;
+}
+div {
+  margin: 0;
+  padding: 0;
 }
 </style>
