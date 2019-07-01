@@ -6,7 +6,7 @@
         v-for="(item, index) of menuList"
         :key="index"
         @click="handleClick(item, index)"
-        :style="{background:(index==cnt?'#00a1d6':''),color:(index === cnt?'#fff':'#000')}"
+        :style="{background:(index==cnt?'#00a1d6':''),color:(index === cnt?'#fff':'')}"
       >{{item}}</div>
     </div>
     <div class="connect-line" v-if="flag"></div>
@@ -33,7 +33,14 @@ export default {
   },
   methods: {
     handleClick(item, index) {
+      let top;
       this.cnt = index;
+      if (index === 0) {
+        top = 225;
+      } else {
+        top = index * 375 + 225;
+      }
+      window.scrollTo({ left: 0, top, behavior: "smooth" });
     },
     backTop() {
       window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
@@ -42,39 +49,12 @@ export default {
       window.onscroll = () => {
         const scrollTop =
           document.documentElement.scrollTop || document.body.scrollTop; //兼容性写法，并且在滚动事件内可以实时获得滚动条距顶部的距离
-        // console.log(scrollTop);
-        if (scrollTop > 270) {
+        if (scrollTop > 224) {
           this.top = "0px";
           this.flag = true;
         } else {
           this.top = "232px";
           this.flag = false;
-        }
-        switch (scrollTop) {
-          case scrollTop > 1:
-            this.bgColor = "#00a1d6";
-            break;
-          case scrollTop > 225:
-            this.bgColor = "#00a1d6";
-            break;
-          case scrollTop > 600:
-            this.bgColor = "#00a1d6";
-            break;
-          case scrollTop > 975:
-            this.bgColor = "#00a1d6";
-            break;
-          case scrollTop > 1350:
-            this.bgColor = "#00a1d6";
-            break;
-          case scrollTop > 1725:
-            this.bgColor = "#00a1d6";
-            break;
-          case scrollTop > 2100:
-            this.bgColor = "#00a1d6";
-            break;
-          default:
-            this.bgColor = "#00a1d6";
-            break;
         }
       };
     }
@@ -109,6 +89,7 @@ export default {
     }
     .item:hover {
       background: #00a1d6;
+      color: white;
     }
   }
   .back-top {
